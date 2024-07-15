@@ -1,0 +1,5 @@
+Added user : {"name":"ay7aga","age":100,"id":6}
+Sorted users : [{"name":"ahmed","age":21,"id":3},{"name":"ay7aga","age":100,"id":6},{"name":"hamad","age":22,"id":5},{"name":"hassan","age":32,"id":2},{"name":"mohamed","age":24,"id":1},{"name":"peter","age":23,"id":4}]
+update user : {"id":1,"name":"mo","age":"4"}
+Deleted user : [{"name":"ay7aga","age":100,"id":6},{"name":"hamad","age":22,"id":5},{"name":"hassan","age":32,"id":2},{"name":"mo","age":24,"id":1},{"name":"peter","age":23,"id":4}]
+Searched user : {"name":"peter","age":23,"id":"4"}
