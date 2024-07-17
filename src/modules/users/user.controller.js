@@ -2,6 +2,7 @@
 import bcrypt from 'bcrypt'
 import userModel from '../../../database/models/user.model.js'
 import sendOurEmail from '../../utli/sendEmail.js'
+import jwt from 'jsonwebtoken'
 
 
 
@@ -24,9 +25,13 @@ const signIn = async (req, res) => {
     let foundedUser = await userModel.findOne({ email: req.body.email })
     if (!foundedUser || !bcrypt.compareSync(req.body.password, foundedUser.password))
         return res.status(404).json({ message: "email or password is not valid" })
+
     if (foundedUser.isConfrimed == false)
         return res.status(401).json({ message: "you did not activate your account" })
-    res.status(200).json({ message: "sign in process successfully", foundedUser })
+
+
+    const token = jwt.sign({ id: foundedUser._id, role: foundedUser.role }, 'iti', { expiresIn: '24h' }, process.env.JWT_TOKEN_SECRET)
+    res.status(200).json({ message: "sign in process successfully", token })
 }
 
 const updateUsers = async (req, res) => {

@@ -1,14 +1,19 @@
 import express from 'express'
-import { addNotes, getAllNote } from './note.controller.js'
-
+import { addNotes, getAllNote, updateNotes } from './note.controller.js'
+import verifyToken from '../../middleware/verifyToken.js'
+import allow from '../../middleware/allowTo.js'
 
 
 
 
 const noteRoute = express.Router()
 
-noteRoute.get('/note', getAllNote)
-noteRoute.post('/note', addNotes)
+
+
+noteRoute.use('/note', verifyToken)
+noteRoute.get('/note', allow("Admin", "User"), getAllNote)
+noteRoute.post('/note', allow("User"), addNotes)
+noteRoute.put('/note/:id', updateNotes)
 
 
 

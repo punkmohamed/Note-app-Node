@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema({
     isConfrimed: {
         type: Boolean,
         default: false
+    },
+    role: {
+        type: String,
+        enums: ['User', 'Admin'],
+        default: 'User'
     }
 },
     {
