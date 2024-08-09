@@ -1,6 +1,7 @@
 import { createTransport } from "nodemailer";
-import emailTemplate from "./emailTemplate.js";
-const sendOurEmail = async (email, token) => {
+import emailForgotPasswordTemplate from "./resetPasswordEmail.js";
+
+const resetPasswordEmail = async (email, token) => {
     const transporter = createTransport({
         service: "gmail",
         auth: {
@@ -17,9 +18,9 @@ const sendOurEmail = async (email, token) => {
         to: email, // list of receivers
         subject: "Hello ✔", // Subject line
         text: "Hello world?", // plain text body
-        html: emailTemplate(email, token)
+        html: emailForgotPasswordTemplate(email, token)
     });
 
 }
 
-export default sendOurEmail;
+export default resetPasswordEmail;

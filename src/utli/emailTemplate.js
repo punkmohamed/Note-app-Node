@@ -1,4 +1,4 @@
-const emailTemplate = (email) => {
+const emailTemplate = (email, token) => {
     return `    < !DOCTYPE html >
         <html>
             <head>
@@ -75,7 +75,7 @@ const emailTemplate = (email) => {
                                                         <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;" width="260">
                                                             <tbody><tr>
                                                                 <td align="center" bgcolor="#339933" class="button-wrapper" height="43" style="background: transparent none no-repeat 0 0 !important;" valign="middle" width="260">
-                                                                    <a class="download-button button" href="http://localhost:3000/verfiy/${email}" target="_blank"> Active you account/span></span></a>
+                                                                    <a class="download-button button" href="http://localhost:4200/verfiyAccount/${token}" target="_blank"> Active you account/span></span></a>
                                                             </td>
                                                             </tr>
                                                         </tbody></table>

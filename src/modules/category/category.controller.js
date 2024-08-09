@@ -14,18 +14,11 @@ const getAllUsers = async (req, res) => {
 
 
 const signUp = async (req, res) => {
-    const { email, ...rest } = req.body
-    try {
-        let user = await userModel.insertMany({ email, ...rest })
 
-        const token = jwt.sign({ email }, 'iti', { expiresIn: '2m' }, process.env.JWT_TOKEN_SECRET)
-        res.json({ message: "signup process successfully an email was sent to you to activate the account", user, token: token })
-        await sendOurEmail(email, token)
+    let user = await userModel.insertMany(req.body)
 
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error' });
-    }
+    res.json({ message: "signup process successfully", user })
+    sendOurEmail(req.body.email)
     // let user = new userModel(req.body) anthor way to add using just one
     // user.save()
 }
@@ -76,31 +69,9 @@ const sortUsers = async (req, res) => {
     res.json({ messages: "sorted", user })
 }
 const verfiyAccount = async (req, res) => {
-    try {
-        const { token } = req.params;
-        let decoded;
-        try {
-            decoded = jwt.verify(token, 'iti');
-        } catch (error) {
-            return res.status(401).json({ message: 'Invalid or expired token' });
-        }
-        const email = decoded.email;
-        const user = await userModel.findOneAndUpdate(
-            { email },
-            { isConfrimed: true },
-            { new: true }
-        );
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        console.log('Updated user:', user);
-        res.json({ message: "Your account is activated" });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ message: "Internal server error" });
-    }
+    let user = await userModel.findOneAndUpdate({ email: req.params.email }, { isConfrimed: true }, { new: true })
+    res.json({ messages: "welcome" })
 }
-
 const forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
@@ -142,8 +113,6 @@ const resetPassword = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
-
-
 }
 
 export {
